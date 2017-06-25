@@ -28,10 +28,13 @@ class Pong: SKScene, SKPhysicsContactDelegate {
             ball.removeFromParent()
             ball.position = paddleT.position
             ball.position.y += ball.size.width
-            scoreB+=1
             addChild(ball)
             ball.physicsBody?.velocity = CGVector.zero
             ball.physicsBody?.applyImpulse(CGVector(dx : 0, dy : -300))
+            
+            if(scoreB==5){
+                reset(winner: paddleB)
+            }
         }
     }
     
@@ -41,10 +44,12 @@ class Pong: SKScene, SKPhysicsContactDelegate {
             ball.removeFromParent()
             ball.position = paddleB.position
             ball.position.y -= ball.size.width
-            scoreT+=1
             addChild(ball)
             ball.physicsBody?.velocity = CGVector.zero
             ball.physicsBody?.applyImpulse(CGVector(dx : 0, dy : 300))
+            if(scoreT==5){
+                reset(winner: paddleT)
+            }
         }
     }
     
@@ -119,10 +124,15 @@ class Pong: SKScene, SKPhysicsContactDelegate {
         }
         
     }
-    func resetBall(){
-        ball.removeFromParent()
-        ball.position = CGPoint.zero
-        addChild(ball)
+    func reset(winner: SKSpriteNode){
+        if let scene = SKScene(fileNamed:"Pong") {
+            let skView = self.view! as SKView
+            skView.ignoresSiblingOrder = true
+            scene.scaleMode = .aspectFill
+            scene.size = skView.bounds.size
+            skView.presentScene(scene, transition: SKTransition.fade(withDuration: 1))
+        }
+
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(!gameStart){
@@ -171,5 +181,5 @@ class Pong: SKScene, SKPhysicsContactDelegate {
             }
         }
         
-    }    
+    }
 }

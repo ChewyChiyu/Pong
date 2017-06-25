@@ -17,6 +17,8 @@
 		20B9E5201EFE4544009B8CAF /* PongUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E51F1EFE4544009B8CAF /* PongUITests.swift */; };
 		20B9E52E1EFF0B48009B8CAF /* Pong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B9E52D1EFF0B48009B8CAF /* Pong.swift */; };
 		20B9E5301EFF0B99009B8CAF /* Pong.sks in Resources */ = {isa = PBXBuildFile; fileRef = 20B9E52F1EFF0B99009B8CAF /* Pong.sks */; };
+		20C15CE81F005AAB0068E568 /* PongGoal.sks in Resources */ = {isa = PBXBuildFile; fileRef = 20C15CE71F005AAB0068E568 /* PongGoal.sks */; };
+		20C15CEE1F005E070068E568 /* PongHit.sks in Resources */ = {isa = PBXBuildFile; fileRef = 20C15CED1F005E070068E568 /* PongHit.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		20B9E5211EFE4544009B8CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20B9E52D1EFF0B48009B8CAF /* Pong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pong.swift; sourceTree = "<group>"; };
 		20B9E52F1EFF0B99009B8CAF /* Pong.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Pong.sks; sourceTree = "<group>"; };
+		20C15CE71F005AAB0068E568 /* PongGoal.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PongGoal.sks; sourceTree = "<group>"; };
+		20C15CED1F005E070068E568 /* PongHit.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = PongHit.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				20B9E4F91EFE4544009B8CAF /* AppDelegate.swift */,
+				20C15CE71F005AAB0068E568 /* PongGoal.sks */,
 				20B9E52D1EFF0B48009B8CAF /* Pong.swift */,
 				20B9E52F1EFF0B99009B8CAF /* Pong.sks */,
 				20B9E4FD1EFE4544009B8CAF /* Actions.sks */,
@@ -112,6 +117,7 @@
 				20B9E5061EFE4544009B8CAF /* Assets.xcassets */,
 				20B9E5081EFE4544009B8CAF /* LaunchScreen.storyboard */,
 				20B9E50B1EFE4544009B8CAF /* Info.plist */,
+				20C15CED1F005E070068E568 /* PongHit.sks */,
 			);
 			path = Pong;
 			sourceTree = "<group>";
@@ -242,9 +248,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20C15CE81F005AAB0068E568 /* PongGoal.sks in Resources */,
 				20B9E5051EFE4544009B8CAF /* Main.storyboard in Resources */,
 				20B9E5071EFE4544009B8CAF /* Assets.xcassets in Resources */,
 				20B9E5301EFF0B99009B8CAF /* Pong.sks in Resources */,
+				20C15CEE1F005E070068E568 /* PongHit.sks in Resources */,
 				20B9E50A1EFE4544009B8CAF /* LaunchScreen.storyboard in Resources */,
 				20B9E4FE1EFE4544009B8CAF /* Actions.sks in Resources */,
 			);
@@ -522,6 +530,7 @@
 				20B9E5261EFE4544009B8CAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		20B9E5271EFE4544009B8CAF /* Build configuration list for PBXNativeTarget "PongTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +539,7 @@
 				20B9E5291EFE4544009B8CAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		20B9E52A1EFE4544009B8CAF /* Build configuration list for PBXNativeTarget "PongUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +548,7 @@
 				20B9E52C1EFE4544009B8CAF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

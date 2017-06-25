@@ -22,15 +22,20 @@ class Pong: SKScene, SKPhysicsContactDelegate {
     
     var ball : SKSpriteNode!
     
+    
+    var spark = SKEmitterNode(fileNamed: "PongHit.sks")
+    var goalSpark = SKEmitterNode(fileNamed: "PongGoal.sks")
+
+    
     var scoreB: Int = 0{
         didSet{
             scoreBLabel?.text = String(scoreB)
             ball.removeFromParent()
             ball.position = paddleT.position
-            ball.position.y += ball.size.width
+            ball.position.y += (ball.size.width * 2)
             addChild(ball)
             ball.physicsBody?.velocity = CGVector.zero
-            ball.physicsBody?.applyImpulse(CGVector(dx : 0, dy : -300))
+            ball.physicsBody?.applyImpulse(CGVector(dx : 200, dy : 600))
             
             if(scoreB==5){
                 reset(winner: paddleB)
@@ -43,21 +48,16 @@ class Pong: SKScene, SKPhysicsContactDelegate {
             scoreTLabel?.text = String(scoreT)
             ball.removeFromParent()
             ball.position = paddleB.position
-            ball.position.y -= ball.size.width
+            ball.position.y -= (ball.size.width * 2)
             addChild(ball)
             ball.physicsBody?.velocity = CGVector.zero
-            ball.physicsBody?.applyImpulse(CGVector(dx : 0, dy : 300))
+            ball.physicsBody?.applyImpulse(CGVector(dx : 200, dy : -600))
             if(scoreT==5){
                 reset(winner: paddleT)
             }
         }
     }
     
-    
-    var tVelocityX :CGFloat = 0
-    var bVelocityX: CGFloat = 0
-    
-    var maxXVelo: CGFloat = 200
     
     var gameStart:Bool = false
     
@@ -80,8 +80,14 @@ class Pong: SKScene, SKPhysicsContactDelegate {
         borderBody.linearDamping = 0
         physicsBody = borderBody
         
-        physicsWorld.contactDelegate = self
         
+        goalSpark?.isHidden = true
+        addChild(goalSpark!)
+        
+        spark?.isHidden = true
+        addChild(spark!)
+        
+        physicsWorld.contactDelegate = self
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -91,34 +97,41 @@ class Pong: SKScene, SKPhysicsContactDelegate {
         
         if(pointB.node?.name == "Ball"){
             
-            if(pointA.node?.name == "PaddleT"){
-                pointB.node?.physicsBody?.velocity.dx  = (pointB.node?.physicsBody?.velocity.dx)! + tVelocityX
-                
-            }
-            else if(pointA.node?.name == "PaddleB"){
-                pointB.node?.physicsBody?.velocity.dx  = (pointB.node?.physicsBody?.velocity.dx)! + bVelocityX
-                
-            }
-            else if(pointA.node?.name == "GoalB"){
+
+            if(pointA.node?.name == "GoalB"){
+                goalSpark?.isHidden = false
+                goalSpark?.resetSimulation()
+                goalSpark?.position = (pointB.node?.position)!
                 scoreT+=1
             }
             else if(pointA.node?.name == "GoalT"){
+                goalSpark?.isHidden = false
+                goalSpark?.resetSimulation()
+                goalSpark?.position = (pointB.node?.position)!
                 scoreB+=1
+            }else{
+                spark?.isHidden = false
+                spark?.resetSimulation()
+                spark?.position = (pointB.node?.position)!
             }
+           
         }
         if(pointA.node?.name == "Ball"){
-            if(pointB.node?.name == "PaddleT"){
-                pointA.node?.physicsBody?.velocity.dx  = (pointA.node?.physicsBody?.velocity.dx)! + tVelocityX
-                
-            }
-            else if(pointB.node?.name == "PaddleB"){
-                pointA.node?.physicsBody?.velocity.dx  = (pointA.node?.physicsBody?.velocity.dx)! + bVelocityX
-            }
-            else if(pointB.node?.name == "GoalB"){
+            if(pointB.node?.name == "GoalB"){
+                goalSpark?.isHidden = false
+                goalSpark?.resetSimulation()
+                goalSpark?.position = (pointA.node?.position)!
                 scoreT+=1
             }
             else if(pointB.node?.name == "GoalT"){
+                goalSpark?.isHidden = false
+                goalSpark?.resetSimulation()
+                goalSpark?.position = (pointA.node?.position)!
                 scoreB+=1
+            }else{
+                spark?.isHidden = false
+                spark?.resetSimulation()
+                spark?.position = (pointA.node?.position)!
             }
             
         }
@@ -137,7 +150,7 @@ class Pong: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if(!gameStart){
             gameStart = true
-            ball.physicsBody?.applyImpulse(CGVector(dx : 0, dy : 300))
+            ball.physicsBody?.applyImpulse(CGVector(dx : 200, dy : 600))
         }
     }
     
@@ -145,25 +158,14 @@ class Pong: SKScene, SKPhysicsContactDelegate {
         for touch in touches{
             let location = touch.location(in: self)
             if( location.y > 0){
-                if( location.x > paddleB.position.x){
-                    bVelocityX = maxXVelo
-                }
-                if( location.x < paddleB.position.x){
-                    bVelocityX = -maxXVelo
-                }
                 if(location.x + paddleB.size.width/2 < (view?.bounds.width)!/2 && location.x - paddleB.size.width/2 > -(view?.bounds.width)!/2){
-                    paddleB.position.x = location.x
+                  //  paddleB.position.x = location.x
+                    paddleB.run(SKAction.move(to: CGPoint(x: location.x, y : paddleB.position.y), duration: 0.2))
                 }
             }else{
-                if( location.x > paddleT.position.x){
-                    tVelocityX = maxXVelo
-                }
-                if( location.x < paddleT.position.x){
-                    tVelocityX = -maxXVelo
-                }
-                
                 if(location.x + paddleT.size.width/2 < (view?.bounds.width)!/2 && location.x - paddleT.size.width/2 > -(view?.bounds.width)!/2){
-                    paddleT.position.x = location.x
+                    //paddleT.position.x = location.x
+                    paddleT.run(SKAction.move(to: CGPoint(x: location.x, y : paddleT.position.y), duration: 0.2))
                 }
                 
             }
@@ -172,14 +174,6 @@ class Pong: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches{
-            let location = touch.location(in: self)
-            if( location.y > 0){
-                bVelocityX = 0
-            }else{
-                tVelocityX = 0
-            }
-        }
         
     }
 }
